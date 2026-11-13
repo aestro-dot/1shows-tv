@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -383,18 +382,42 @@ result.innerHTML='<div class="empty">Could not connect to the TV catalogue. Plea
 });
 
 // OPEN SHOW DETAILS
-document.addEventListener("click",async event=>{
-const card=event.target.closest("[data-show-id]");
-if(card){
-await openShow(Number(card.dataset.showId));
-return;
-}
+// OPEN SHOW DETAILS — FIXED
+document.addEventListener("click", async event => {
 
-const movie=event.target.closest(".movie");
-if(movie){
-openMovie(movie);
-}
+  const card = event.target.closest(".card[data-show-id]");
+
+  if (card) {
+    event.preventDefault();
+
+    const id = card.getAttribute("data-show-id");
+
+    if (!id || id === "undefined") {
+      alert("Show ID is missing. Please reload the catalogue.");
+      return;
+    }
+
+    try {
+      await openShow(Number(id));
+    } catch (error) {
+      console.error("Show opening error:", error);
+      alert("Unable to load this show. Please try again.");
+    }
+
+    return;
+  }
+
+  const movie = event.target.closest(".movie");
+
+  if (movie) {
+    event.preventDefault();
+    openMovie(movie);
+  }
+
 });
+
+  
+
 
 async function openShow(id){
 const view=document.getElementById("detailView");
