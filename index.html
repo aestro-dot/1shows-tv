@@ -802,6 +802,94 @@ renderContinue();
   .player-top{top:8px;left:9px;right:9px}
   #playerVolume{width:65px}
 }
+  
+/* 1SHOWS PLAYER - COMPACT REDESIGN */
+
+#showsPlayer.open {
+  padding: 16px;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.92);
+}
+
+#showsPlayer.open .player-shell {
+  width: min(900px, calc(100vw - 32px));
+  max-height: calc(100dvh - 48px);
+  aspect-ratio: 16 / 9;
+  border-radius: 20px;
+}
+
+#showsVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.player-center {
+  gap: 16px;
+}
+
+.player-center button {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  font-size: 14px;
+  border-radius: 50%;
+}
+
+.player-center .main-play {
+  width: 58px;
+  height: 58px;
+  padding: 0;
+  font-size: 23px;
+  border-radius: 18px;
+}
+
+.player-glass {
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  padding: 10px 14px;
+  border-radius: 18px;
+}
+
+.player-top {
+  top: 10px;
+  left: 12px;
+  right: 12px;
+}
+
+#playerVolume {
+  width: 110px;
+}
+
+#playerSeek {
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  #showsPlayer.open {
+    padding: 12px;
+  }
+
+  #showsPlayer.open .player-shell {
+    width: calc(100vw - 24px);
+  }
+
+  .player-glass {
+    padding: 8px 10px;
+  }
+
+  .player-center {
+    gap: 10px;
+  }
+
+  #playerVolume {
+    width: 75px;
+  }
+}
+
 </style>
 
 <button id="playerTest" onclick="open1ShowsPlayer()">▶ Preview Player</button>
