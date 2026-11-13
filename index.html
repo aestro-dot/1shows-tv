@@ -890,10 +890,52 @@ renderContinue();
   }
 }
 
+/* FINAL 1SHOWS PLAYER SIZE FIX */
+
 #showsPlayer.open .player-shell {
-  width: 320px !important;
-  outline: 5px solid red !important;
+  width: min(860px, calc(100vw - 24px)) !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: calc(100dvh - 80px) !important;
+  aspect-ratio: 16 / 9 !important;
+  border-radius: 20px !important;
 }
+
+#showsPlayer.open .player-glass {
+  left: 12px !important;
+  right: 12px !important;
+  bottom: 10px !important;
+  padding: 8px 12px !important;
+}
+
+#showsPlayer.open .player-controls button {
+  padding: 7px 11px !important;
+  font-size: 14px !important;
+}
+
+#showsPlayer.open .player-center button {
+  width: 42px !important;
+  height: 42px !important;
+  padding: 0 !important;
+  font-size: 14px !important;
+}
+
+#showsPlayer.open .player-center .main-play {
+  width: 54px !important;
+  height: 54px !important;
+  font-size: 22px !important;
+}
+
+@media (max-width: 600px) {
+  #showsPlayer.open .player-shell {
+    width: calc(100vw - 24px) !important;
+  }
+
+  #showsPlayer.open .player-glass {
+    padding: 7px 9px !important;
+  }
+}
+
 </style>
 
 <button id="playerTest" onclick="open1ShowsPlayer()">▶ Preview Player</button>
