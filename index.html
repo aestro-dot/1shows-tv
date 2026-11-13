@@ -1,39 +1,47 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#08090d">
-<title>1SHOWS TV</title>
+<title>1SHOWS — The TV Edition</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#08090d;color:white;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+:root{color-scheme:dark;--muted:#aeb5c2}
+body{margin:0;background:#08090d;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 header{padding:25px 5%;display:flex;justify-content:space-between;align-items:center}
 .logo{font-size:30px;font-weight:900;letter-spacing:5px}
 .sub{font-size:10px;letter-spacing:3px;color:#9298a6}
 main{padding:15px 5% 150px;max-width:1500px;margin:auto}
 .page{display:none}.page.active{display:block}
-.hero{min-height:390px;border-radius:25px;padding:35px;display:flex;align-items:end;background:linear-gradient(90deg,#05070bed,#05070b30),linear-gradient(0deg,#08090d,transparent 70%),url('https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=1500') center/cover}
+.hero{min-height:390px;border-radius:25px;padding:35px;display:flex;align-items:end;overflow:hidden;background:linear-gradient(90deg,#05070bed,#05070b30),linear-gradient(0deg,#08090d,transparent 70%),url('https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=1500') center/cover}
 .eyebrow{font-size:12px;letter-spacing:3px;color:#c5d4f4}
 h1{font-size:clamp(40px,6vw,72px);line-height:1.05;margin:15px 0}
 p{color:#b5bac5}
 .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
 .action{padding:14px 24px;border-radius:30px;border:1px solid #ffffff40;background:#ffffff18;color:white;text-decoration:none;backdrop-filter:blur(20px)}
 .primary{background:white;color:#111;font-weight:700}
-h2{font-size:24px;margin:40px 0 18px}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin:38px 0 16px}
+h2{font-size:24px;margin:0}
+.section-note{font-size:12px;color:#858d9b}
 .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
-.card{background:#171c28;border:1px solid #ffffff25;border-radius:17px;overflow:hidden;color:white;text-align:left;text-decoration:none;cursor:pointer}
-.poster{aspect-ratio:2/2.8;background:linear-gradient(145deg,#34445c,#10131d);background-size:cover;background-position:center;display:flex;align-items:end;padding:15px;font-size:20px;font-weight:800}
-.card small{display:block;padding:13px;color:#b5bac5}
+.card{display:block;min-width:0;background:#171c28;border:1px solid #ffffff25;border-radius:17px;overflow:hidden;color:white;text-align:left;text-decoration:none;transition:transform .25s,border-color .25s}
+.card:active{transform:scale(.98)}
+.card:hover{border-color:#ffffff70;transform:translateY(-3px)}
+.poster{aspect-ratio:2/2.85;background:#171c28 center/cover no-repeat;position:relative;display:flex;align-items:end;padding:12px}
+.poster:after{content:"";position:absolute;inset:35% 0 0;background:linear-gradient(transparent,#08090de8)}
+.poster-label{position:relative;z-index:1;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#fff;background:#0008;border:1px solid #ffffff38;border-radius:20px;padding:6px 9px;backdrop-filter:blur(12px)}
+.card-info{padding:12px 13px 14px}
+.card-title{font-weight:700;font-size:15px;line-height:1.25}
+.card-meta{font-size:12px;color:#aeb5c2;margin-top:5px}
 .panel{padding:25px;border:1px solid #ffffff25;border-radius:20px;background:linear-gradient(135deg,#ffffff20,#ffffff05);backdrop-filter:blur(25px);color:#b5bac5;margin-top:20px}
 .dock{position:fixed;z-index:10;bottom:22px;left:50%;transform:translateX(-50%);width:min(470px,calc(100% - 30px));padding:10px;display:flex;justify-content:space-around;align-items:center;border:1px solid #ffffff55;border-radius:50px;background:linear-gradient(135deg,#ffffff40,#ffffff12 50%,#ffffff25);backdrop-filter:blur(45px) saturate(220%);-webkit-backdrop-filter:blur(45px) saturate(220%);box-shadow:0 18px 55px #0009,inset 0 1px 2px #ffffff80}
 .dock button{width:66px;height:66px;border:1px solid transparent;border-radius:50%;background:transparent;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.25s}
 .dock button.active{background:linear-gradient(145deg,#fff,#dce6fa);color:#172033;box-shadow:0 5px 20px #0007;transform:scale(1.06)}
 .dock svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 button:focus-visible,a:focus-visible{outline:3px solid #8bc5ff;outline-offset:4px}
-@media(max-width:850px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{min-height:330px}}
-@media(max-width:480px){.hero{padding:23px;min-height:330px}.dock{bottom:14px}.dock button{width:58px;height:58px}}
+@media(max-width:850px){.cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.hero{min-height:330px}}
+@media(max-width:480px){header{padding-top:22px}.hero{padding:23px;min-height:330px}.dock{bottom:14px}.dock button{width:58px;height:58px}.card-title{font-size:14px}}
 @media(min-width:1100px){.cards{grid-template-columns:repeat(5,minmax(0,1fr))}}
 </style>
 </head>
@@ -42,10 +50,7 @@ button:focus-visible,a:focus-visible{outline:3px solid #8bc5ff;outline-offset:4p
 <div><div class="logo">1SHOWS</div><div class="sub">THE TV EDITION</div></div>
 <div class="sub">STREAMING</div>
 </header>
-
 <main>
-
-<!-- SHOWS -->
 <section class="page active" id="shows">
 <div class="hero"><div>
 <div class="eyebrow">SERIES · SEASONS · EPISODES</div>
@@ -53,14 +58,16 @@ button:focus-visible,a:focus-visible{outline:3px solid #8bc5ff;outline-offset:4p
 <p>Discover your next favourite series.</p>
 <div class="actions"><a class="action primary" href="https://www.1shows.org/">Explore TV Shows</a></div>
 </div></div>
-<h2>TV Shows &amp; Series</h2>
+<div class="section-head"><h2>Featured TV Shows</h2><span class="section-note">SERIES</span></div>
 <div class="cards">
-<a class="card" href="https://www.1shows.org/"><div class="poster" style="background-image:linear-gradient(0deg,#000a,transparent),url('https://images.unsplash.com/photo-1485846234645-a62644f84728?w=700')">Discover Series</div><small>Explore all series</small></a>
+<a class="card" href="https://www.1shows.org/"><div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/u3bZgnGQ9T01sWNhyveQz0wH0Hl.jpg')"><span class="poster-label">Sci-fi · Drama</span></div><div class="card-info"><div class="card-title">Stranger Things</div><div class="card-meta">Mystery · 2016</div></div></a>
+<a class="card" href="https://www.1shows.org/"><div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/ztkUQFLlC19CCMYHW9o1zWhJRNq.jpg')"><span class="poster-label">Crime · Drama</span></div><div class="card-info"><div class="card-title">Breaking Bad</div><div class="card-meta">Crime · 2008</div></div></a>
+<a class="card" href="https://www.1shows.org/"><div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/7DJKHzAi83BmQrWLrYYOqcoKfhR.jpg')"><span class="poster-label">Comedy</span></div><div class="card-info"><div class="card-title">The Office</div><div class="card-meta">Comedy · 2005</div></div></a>
+
 </div>
-<div class="panel">Your dedicated home for television series, seasons and episodes.</div>
+<div class="panel">Your dedicated home for television series, seasons and episodes. Movies have their own separate section.</div>
 </section>
 
-<!-- MOVIES -->
 <section class="page" id="movies">
 <div class="hero"><div>
 <div class="eyebrow">FEATURE FILMS · CINEMA</div>
@@ -68,13 +75,16 @@ button:focus-visible,a:focus-visible{outline:3px solid #8bc5ff;outline-offset:4p
 <p>Discover your next favourite film.</p>
 <div class="actions"><a class="action primary" href="https://www.1shows.org/">Explore Movies</a></div>
 </div></div>
-<h2>Featured Movies</h2>
+<div class="section-head"><h2>Featured Movies</h2><span class="section-note">FILMS</span></div>
 <div class="cards">
-<a class="card" href="https://www.1shows.org/movies/1423191-resident-evil?streaming=true"><div class="poster" style="background-image:linear-gradient(0deg,#000a,transparent),url('https://images.unsplash.com/photo-1509248961158-e54f6934749c?w=700')">RESIDENT EVIL</div><small>Horror · 1h 34m</small></a>
+<a class="card" href="https://www.1shows.org/"><div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg')"><span class="poster-label">Sci-fi · 2014</span></div><div class="card-info"><div class="card-title">Interstellar</div><div class="card-meta">Adventure · Drama</div></div></a>
+<a class="card" href="https://www.1shows.org/"><div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/d5NXSklXo0qyIYkgV94XAgMIckC.jpg')"><span class="poster-label">Sci-fi · 2024</span></div><div class="card-info"><div class="card-title">Dune: Part Two</div><div class="card-meta">Adventure · Drama</div></div></a>
+<a class="card" href="https://www.1shows.org/"><div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg')"><span class="poster-label">Drama · 1999</span></div><div class="card-info"><div class="card-title">Fight Club</div><div class="card-meta">Thriller · Drama</div></div></a>
+<a class="card" href="https://www.1shows.org/"><div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg')"><span class="poster-label">Drama · 1994</span></div><div class="card-info"><div class="card-title">The Shawshank Redemption</div><div class="card-meta">Drama</div></div></a>
+<a class="card" href="https://www.1shows.org/movies/1423191-resident-evil?streaming=true"><div class="poster" style="background-image:url('https://images.unsplash.com/photo-1509248961158-e54f6934749c?w=700')"><span class="poster-label">Horror · 1h 34m</span></div><div class="card-info"><div class="card-title">Resident Evil</div><div class="card-meta">Horror · Watch on 1Shows</div></div></a>
 </div>
 </section>
 
-<!-- SPORTS -->
 <section class="page" id="sports">
 <div class="hero"><div>
 <div class="eyebrow">LIVE · MATCHES · HIGHLIGHTS</div>
@@ -82,57 +92,38 @@ button:focus-visible,a:focus-visible{outline:3px solid #8bc5ff;outline-offset:4p
 <p>Your destination for sports.</p>
 <div class="actions"><a class="action primary" href="https://www.1shows.org/">Explore</a></div>
 </div></div>
-<h2>Sports Hub</h2>
+<h2 style="margin-top:38px">Sports Hub</h2>
 <div class="panel">Your dedicated sports destination. Sports listings and live feeds will be connected in a future update.</div>
 </section>
 
-<!-- LIBRARY -->
 <section class="page" id="library">
 <div class="hero"><div>
 <div class="eyebrow">YOUR PERSONAL COLLECTION</div>
 <h1>Your library.<br>Your favourites.</h1>
 <p>Everything you want to watch.</p>
 </div></div>
-<h2>Saved Titles</h2>
+<h2 style="margin-top:38px">Saved Titles</h2>
 <div id="saved" class="panel">Your library is ready. Save titles as we add catalogue features.</div>
-<h2>Quick Access</h2>
+<h2 style="margin-top:38px">Quick Access</h2>
 <div class="actions">
 <a class="action primary" href="https://www.1shows.org/">Open 1Shows</a>
 <a class="action" href="https://www.1shows.org/movies/1423191-resident-evil?streaming=true">Resident Evil</a>
 </div>
 </section>
-
 </main>
 
-<!-- LIQUID GLASS NAVIGATION -->
 <nav class="dock" aria-label="Main navigation">
-
-<button class="active" data-page="shows" aria-label="Show" title="Show">
-<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 3v18M17 3v18M3 8h4m-4 8h4m10-8h4m-4 8h4"/></svg>
-</button>
-
-<button data-page="movies" aria-label="Movie" title="Movie">
-<svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 22h8m-4-4v4"/></svg>
-</button>
-
-<button data-page="sports" aria-label="Sports" title="Sports">
-<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m12 2 3 6-3 4-6-1-4-5m18 0-5 5 2 6-5 5-5-4 1-6m0-4 6 3 4-3"/></svg>
-</button>
-
-<button data-page="library" aria-label="Library" title="Library">
-<svg viewBox="0 0 24 24"><path d="M4 4h16v17H4zM8 2h8M8 8h8m-8 4h8m-8 4h5"/></svg>
-</button>
-
+<button class="active" data-page="shows" aria-label="Show" title="Show"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 3v18M17 3v18M3 8h4m-4 8h4m10-8h4m-4 8h4"/></svg></button>
+<button data-page="movies" aria-label="Movie" title="Movie"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 22h8m-4-4v4"/></svg></button>
+<button data-page="sports" aria-label="Sports" title="Sports"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m12 2 3 6-3 4-6-1-4-5m18 0-5 5 2 6-5 5-5-4 1-6m0-4 6 3 4-3"/></svg></button>
+<button data-page="library" aria-label="Library" title="Library"><svg viewBox="0 0 24 24"><path d="M4 4h16v17H4zM8 2h8M8 8h8m-8 4h8m-8 4h5"/></svg></button>
 </nav>
-
 <script>
 const buttons=document.querySelectorAll('.dock button');
 buttons.forEach(button=>{
 button.addEventListener('click',()=>{
 const target=button.dataset.page;
-document.querySelectorAll('.page').forEach(page=>{
-page.classList.toggle('active',page.id===target);
-});
+document.querySelectorAll('.page').forEach(page=>page.classList.toggle('active',page.id===target));
 buttons.forEach(b=>b.classList.toggle('active',b===button));
 window.scrollTo({top:0,behavior:'smooth'});
 });
@@ -140,4 +131,3 @@ window.scrollTo({top:0,behavior:'smooth'});
 </script>
 </body>
 </html>
-
