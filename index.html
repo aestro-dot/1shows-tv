@@ -43,6 +43,23 @@ button:focus-visible,a:focus-visible{outline:3px solid #8bc5ff;outline-offset:4p
 @media(max-width:850px){.cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.hero{min-height:330px}}
 @media(max-width:480px){header{padding-top:22px}.hero{padding:23px;min-height:330px}.dock{bottom:14px}.dock button{width:58px;height:58px}.card-title{font-size:14px}}
 @media(min-width:1100px){.cards{grid-template-columns:repeat(5,minmax(0,1fr))}}
+
+.detail-view{position:fixed;inset:0;z-index:30;display:none;overflow:auto;background:#08090d}
+.detail-view.open{display:block}
+.detail-backdrop{min-height:68vh;padding:28px 6% 50px;display:flex;align-items:end;background-position:center;background-size:cover;position:relative}
+.detail-backdrop:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#08090d 2%,#08090d88 55%,#08090d20)}
+.detail-content{position:relative;z-index:1;max-width:760px}
+.detail-close{position:absolute;z-index:3;top:20px;left:20px;width:44px;height:44px;border-radius:50%;border:1px solid #ffffff55;background:#ffffff24;color:white;font-size:25px;backdrop-filter:blur(20px)}
+.detail-kicker{letter-spacing:3px;font-size:12px;color:#d4dcf2}
+.detail-title{font-size:clamp(38px,7vw,68px);line-height:1.05;margin:14px 0}
+.detail-meta{color:#d4d8e2;font-size:14px}
+.detail-description{max-width:650px;line-height:1.6;color:#d0d4dd}
+.detail-body{padding:25px 6% 150px;max-width:1100px;margin:auto}
+.episode{display:flex;gap:14px;align-items:center;padding:15px 0;border-bottom:1px solid #ffffff20;color:#d8dbe3}
+.episode-num{color:#8d96a6;font-size:13px;min-width:28px}
+.detail-action{display:inline-flex;margin-top:12px}
+@media(max-width:600px){.detail-backdrop{min-height:62vh;padding-bottom:35px}.detail-body{padding-bottom:140px}}
+
 </style>
 </head>
 <body>
@@ -60,9 +77,9 @@ button:focus-visible,a:focus-visible{outline:3px solid #8bc5ff;outline-offset:4p
 </div></div>
 <div class="section-head"><h2>Featured TV Shows</h2><span class="section-note">SERIES</span></div>
 <div class="cards">
-<a class="card" href="https://www.1shows.org/"><div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/u3bZgnGQ9T01sWNhyveQz0wH0Hl.jpg')"><span class="poster-label">Sci-fi · Drama</span></div><div class="card-info"><div class="card-title">Stranger Things</div><div class="card-meta">Mystery · 2016</div></div></a>
-<a class="card" href="https://www.1shows.org/"><div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/ztkUQFLlC19CCMYHW9o1zWhJRNq.jpg')"><span class="poster-label">Crime · Drama</span></div><div class="card-info"><div class="card-title">Breaking Bad</div><div class="card-meta">Crime · 2008</div></div></a>
-<a class="card" href="https://www.1shows.org/"><div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/7DJKHzAi83BmQrWLrYYOqcoKfhR.jpg')"><span class="poster-label">Comedy</span></div><div class="card-info"><div class="card-title">The Office</div><div class="card-meta">Comedy · 2005</div></div></a>
+<a class="card" href="https://www.1shows.org/" data-title="Stranger Things" data-kind="series" data-genre="Sci-fi · Drama" data-year="2016" data-rating="8.7" data-description="A group of friends uncover mysterious experiments and supernatural forces in their small town." data-art="https://image.tmdb.org/t/p/w500/49WJfeN0moxb9IPfGn8AIqMGskD.jpg"><div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/49WJfeN0moxb9IPfGn8AIqMGskD.jpg')"><span class="poster-label">Sci-fi · Drama</span></div><div class="card-info"><div class="card-title">Stranger Things</div><div class="card-meta">Mystery · 2016</div></div></a>
+<a class="card" href="https://www.1shows.org/" data-title="Breaking Bad" data-kind="series" data-genre="Crime · Drama" data-year="2008" data-rating="9.5" data-description="A chemistry teacher turns to the criminal underworld, changing his life and the lives around him." data-art="https://image.tmdb.org/t/p/w500/ztkUQFLlC19CCMYHW9o1zWhJRNq.jpg"><div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/ztkUQFLlC19CCMYHW9o1zWhJRNq.jpg')"><span class="poster-label">Crime · Drama</span></div><div class="card-info"><div class="card-title">Breaking Bad</div><div class="card-meta">Crime · 2008</div></div></a>
+<a class="card" href="https://www.1shows.org/" data-title="The Office" data-kind="series" data-genre="Comedy" data-year="2005" data-rating="9.0" data-description="A mockumentary look at the daily lives of the employees of a paper company." data-art="https://image.tmdb.org/t/p/w500/7DJKHzAi83BmQrWLrYYOqcoKfhR.jpg"><div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/7DJKHzAi83BmQrWLrYYOqcoKfhR.jpg')"><span class="poster-label">Comedy</span></div><div class="card-info"><div class="card-title">The Office</div><div class="card-meta">Comedy · 2005</div></div></a>
 
 </div>
 <div class="panel">Your dedicated home for television series, seasons and episodes. Movies have their own separate section.</div>
@@ -77,11 +94,11 @@ button:focus-visible,a:focus-visible{outline:3px solid #8bc5ff;outline-offset:4p
 </div></div>
 <div class="section-head"><h2>Featured Movies</h2><span class="section-note">FILMS</span></div>
 <div class="cards">
-<a class="card" href="https://www.1shows.org/"><div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg')"><span class="poster-label">Sci-fi · 2014</span></div><div class="card-info"><div class="card-title">Interstellar</div><div class="card-meta">Adventure · Drama</div></div></a>
-<a class="card" href="https://www.1shows.org/"><div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/d5NXSklXo0qyIYkgV94XAgMIckC.jpg')"><span class="poster-label">Sci-fi · 2024</span></div><div class="card-info"><div class="card-title">Dune: Part Two</div><div class="card-meta">Adventure · Drama</div></div></a>
-<a class="card" href="https://www.1shows.org/"><div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg')"><span class="poster-label">Drama · 1999</span></div><div class="card-info"><div class="card-title">Fight Club</div><div class="card-meta">Thriller · Drama</div></div></a>
-<a class="card" href="https://www.1shows.org/"><div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg')"><span class="poster-label">Drama · 1994</span></div><div class="card-info"><div class="card-title">The Shawshank Redemption</div><div class="card-meta">Drama</div></div></a>
-<a class="card" href="https://www.1shows.org/movies/1423191-resident-evil?streaming=true"><div class="poster" style="background-image:url('https://images.unsplash.com/photo-1509248961158-e54f6934749c?w=700')"><span class="poster-label">Horror · 1h 34m</span></div><div class="card-info"><div class="card-title">Resident Evil</div><div class="card-meta">Horror · Watch on 1Shows</div></div></a>
+<a class="card" href="https://www.1shows.org/" data-title="Interstellar" data-kind="movie" data-genre="Sci-fi · Adventure" data-year="2014" data-rating="8.7" data-description="A team of explorers travels beyond this galaxy to discover whether mankind has a future among the stars." data-art="https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg"><div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg')"><span class="poster-label">Sci-fi · 2014</span></div><div class="card-info"><div class="card-title">Interstellar</div><div class="card-meta">Adventure · Drama</div></div></a>
+<a class="card" href="https://www.1shows.org/" data-title="Dune: Part Two" data-kind="movie" data-genre="Sci-fi · Adventure" data-year="2024" data-rating="8.5" data-description="Paul Atreides unites with Chani and the Fremen while seeking revenge against the conspirators who destroyed his family." data-art="https://image.tmdb.org/t/p/w500/d5NXSklXo0qyIYkgV94XAgMIckC.jpg"><div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/d5NXSklXo0qyIYkgV94XAgMIckC.jpg')"><span class="poster-label">Sci-fi · 2024</span></div><div class="card-info"><div class="card-title">Dune: Part Two</div><div class="card-meta">Adventure · Drama</div></div></a>
+<a class="card" href="https://www.1shows.org/" data-title="Fight Club" data-kind="movie" data-genre="Drama · Thriller" data-year="1999" data-rating="8.8" data-description="An office worker and a soap maker form an underground fight club that evolves into something much bigger." data-art="https://image.tmdb.org/t/p/w500/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg"><div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg')"><span class="poster-label">Drama · 1999</span></div><div class="card-info"><div class="card-title">Fight Club</div><div class="card-meta">Thriller · Drama</div></div></a>
+<a class="card" href="https://www.1shows.org/" data-title="The Shawshank Redemption" data-kind="movie" data-genre="Drama" data-year="1994" data-rating="9.3" data-description="Two imprisoned men bond over years, finding solace and redemption through acts of common decency." data-art="https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg"><div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg')"><span class="poster-label">Drama · 1994</span></div><div class="card-info"><div class="card-title">The Shawshank Redemption</div><div class="card-meta">Drama</div></div></a>
+<a class="card" href="https://www.1shows.org/movies/1423191-resident-evil?streaming=true" data-title="Resident Evil" data-kind="movie" data-genre="Horror" data-year="2026" data-rating="7.5" data-description="A medical courier finds himself caught in a terrifying outbreak." data-art="https://images.unsplash.com/photo-1509248961158-e54f6934749c?w=700"><div class="poster" style="background-image:url('https://images.unsplash.com/photo-1509248961158-e54f6934749c?w=700')"><span class="poster-label">Horror · 1h 34m</span></div><div class="card-info"><div class="card-title">Resident Evil</div><div class="card-meta">Horror · Watch on 1Shows</div></div></a>
 </div>
 </section>
 
@@ -118,7 +135,59 @@ button:focus-visible,a:focus-visible{outline:3px solid #8bc5ff;outline-offset:4p
 <button data-page="sports" aria-label="Sports" title="Sports"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m12 2 3 6-3 4-6-1-4-5m18 0-5 5 2 6-5 5-5-4 1-6m0-4 6 3 4-3"/></svg></button>
 <button data-page="library" aria-label="Library" title="Library"><svg viewBox="0 0 24 24"><path d="M4 4h16v17H4zM8 2h8M8 8h8m-8 4h8m-8 4h5"/></svg></button>
 </nav>
+
+<div class="detail-view" id="detailView" aria-hidden="true">
+  <button class="detail-close" id="detailClose" aria-label="Close details">×</button>
+  <div class="detail-backdrop" id="detailBackdrop">
+    <div class="detail-content">
+      <div class="detail-kicker" id="detailKicker">FEATURED TITLE</div>
+      <h1 class="detail-title" id="detailTitle"></h1>
+      <div class="detail-meta" id="detailMeta"></div>
+      <p class="detail-description" id="detailDescription"></p>
+      <a class="action primary detail-action" id="detailWatch" href="https://www.1shows.org/">Watch on 1Shows</a>
+    </div>
+  </div>
+  <div class="detail-body" id="detailBody"></div>
+</div>
+
 <script>
+
+const detailView=document.getElementById('detailView');
+const detailBackdrop=document.getElementById('detailBackdrop');
+const detailTitle=document.getElementById('detailTitle');
+const detailMeta=document.getElementById('detailMeta');
+const detailDescription=document.getElementById('detailDescription');
+const detailKicker=document.getElementById('detailKicker');
+const detailBody=document.getElementById('detailBody');
+const detailWatch=document.getElementById('detailWatch');
+document.querySelectorAll('.card[data-title]').forEach(card=>{
+  card.addEventListener('click',event=>{
+    event.preventDefault();
+    const d=card.dataset;
+    detailTitle.textContent=d.title;
+    detailKicker.textContent=d.kind==='series'?'TV SERIES':'FEATURE FILM';
+    detailMeta.textContent=`${d.year}  ·  ${d.genre}  ·  ★ ${d.rating}`;
+    detailDescription.textContent=d.description;
+    detailBackdrop.style.backgroundImage=`linear-gradient(90deg,#05070bea,#05070b38),linear-gradient(0deg,#08090d,transparent 75%),url("${d.art}")`;
+    detailWatch.href=d.title==='Resident Evil'
+      ?'https://www.1shows.org/movies/1423191-resident-evil?streaming=true'
+      :'https://www.1shows.org/';
+    detailBody.innerHTML=d.kind==='series'
+      ? `<h2>Seasons & episodes</h2><div class="episode"><span class="episode-num">01</span><div><strong>Season 1</strong><div class="card-meta">Episode guide coming soon</div></div></div><p class="section-note">Episode listings will be connected when catalogue data is added.</p>`
+      : `<h2>About this movie</h2><p class="detail-description">${d.description}</p><p class="section-note">Choose Watch on 1Shows to open the available title page.</p>`;
+    detailView.classList.add('open');
+    detailView.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+    detailView.scrollTop=0;
+  });
+});
+function closeDetails(){
+  detailView.classList.remove('open');
+  detailView.setAttribute('aria-hidden','true');
+  document.body.style.overflow='';
+}
+document.getElementById('detailClose').addEventListener('click',closeDetails);
+
 const buttons=document.querySelectorAll('.dock button');
 buttons.forEach(button=>{
 button.addEventListener('click',()=>{
