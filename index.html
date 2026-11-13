@@ -687,5 +687,227 @@ renderSaved();
 renderContinue();
 </script>
 
+<style>
+#showsPlayer{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:rgba(0,0,0,.94);
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  font-family:Arial,sans-serif;
+}
+#showsPlayer.open{display:flex}
+.player-shell{
+  position:relative;
+  width:min(1100px,100%);
+  aspect-ratio:16/9;
+  border-radius:28px;
+  overflow:hidden;
+  background:#08090d;
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow:0 25px 90px #168bff55;
+}
+#showsVideo{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  background:#000;
+}
+.player-glass{
+  position:absolute;
+  left:3%;
+  right:3%;
+  bottom:5%;
+  padding:14px 18px;
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:24px;
+  background:rgba(25,28,45,.48);
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+  color:white;
+}
+.player-top{
+  position:absolute;
+  top:14px;
+  left:16px;
+  right:16px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.player-glass button,.player-top button{
+  color:white;
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:50px;
+  padding:10px 14px;
+  font-size:17px;
+  cursor:pointer;
+  backdrop-filter:blur(15px);
+}
+.player-center{
+  position:absolute;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:24px;
+  pointer-events:none;
+}
+.player-center button{pointer-events:auto}
+.player-center .main-play{
+  font-size:32px;
+  padding:18px 25px;
+}
+.player-controls{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.player-controls input[type=range]{
+  accent-color:white;
+  min-width:0;
+}
+#playerSeek{width:100%;margin:12px 0}
+.player-time{
+  display:flex;
+  justify-content:space-between;
+  font-size:12px;
+  color:#ddd;
+}
+#playerVolume{width:90px}
+#playerTest{
+  position:fixed;
+  z-index:9998;
+  bottom:22px;
+  right:18px;
+  background:#fff;
+  color:#111;
+  border:0;
+  border-radius:30px;
+  padding:13px 20px;
+  font-weight:bold;
+}
+@media(max-width:600px){
+  #showsPlayer{padding:8px}
+  .player-shell{border-radius:18px}
+  .player-glass{padding:9px 11px;bottom:3%;left:2%;right:2%}
+  .player-center{gap:12px}
+  .player-center button{padding:10px 13px}
+  .player-center .main-play{font-size:24px}
+  .player-top{top:8px;left:9px;right:9px}
+  #playerVolume{width:65px}
+}
+</style>
+
+<button id="playerTest" onclick="open1ShowsPlayer()">▶ Preview Player</button>
+
+<div id="showsPlayer">
+  <div class="player-shell">
+    <video id="showsVideo" playsinline
+      src="https://media.w3.org/2010/05/sintel/trailer.mp4">
+    </video>
+
+    <div class="player-top">
+      <button onclick="close1ShowsPlayer()">✕</button>
+      <input id="playerVolume" type="range"
+        min="0" max="1" step="0.05" value="1"
+        aria-label="Volume">
+    </div>
+
+    <div class="player-center">
+      <button onclick="skip1Shows(-15)">↶ 15</button>
+      <button class="main-play" id="playerPlay"
+        onclick="toggle1ShowsPlay()">▶</button>
+      <button onclick="skip1Shows(15)">15 ↷</button>
+    </div>
+
+    <div class="player-glass">
+      <div class="player-controls">
+        <span>1SHOWS</span>
+        <div>
+          <button onclick="toggle1ShowsPlay()">▶ / ❚❚</button>
+          <button onclick="full1ShowsScreen()">⛶</button>
+        </div>
+      </div>
+      <input id="playerSeek" type="range"
+        min="0" max="100" value="0"
+        aria-label="Video progress">
+      <div class="player-time">
+        <span id="playerCurrent">0:00</span>
+        <span id="playerRemaining">−0:00</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const showsVideo=document.getElementById("showsVideo");
+const showsPlayer=document.getElementById("showsPlayer");
+
+function open1ShowsPlayer(){
+  showsPlayer.classList.add("open");
+  document.body.style.overflow="hidden";
+}
+function close1ShowsPlayer(){
+  showsVideo.pause();
+  showsPlayer.classList.remove("open");
+  document.body.style.overflow="";
+}
+function toggle1ShowsPlay(){
+  if(showsVideo.paused){
+    showsVideo.play();
+  }else{
+    showsVideo.pause();
+  }
+}
+function skip1Shows(seconds){
+  showsVideo.currentTime=Math.max(0,
+    Math.min(showsVideo.duration||0,
+    showsVideo.currentTime+seconds));
+}
+function full1ShowsScreen(){
+  const shell=document.querySelector(".player-shell");
+  if(document.fullscreenElement){
+    document.exitFullscreen();
+  }else if(shell.requestFullscreen){
+    shell.requestFullscreen();
+  }
+}
+document.getElementById("playerVolume").oninput=e=>{
+  showsVideo.volume=Number(e.target.value);
+};
+document.getElementById("playerSeek").oninput=e=>{
+  if(showsVideo.duration){
+    showsVideo.currentTime=
+      showsVideo.duration*Number(e.target.value)/100;
+  }
+};
+showsVideo.ontimeupdate=()=>{
+  if(!showsVideo.duration)return;
+  document.getElementById("playerSeek").value=
+    showsVideo.currentTime/showsVideo.duration*100;
+  const fmt=t=>{
+    t=Math.floor(t||0);
+    return Math.floor(t/60)+":"+
+      String(t%60).padStart(2,"0");
+  };
+  document.getElementById("playerCurrent").textContent=
+    fmt(showsVideo.currentTime);
+  document.getElementById("playerRemaining").textContent=
+    "−"+fmt(showsVideo.duration-showsVideo.currentTime);
+};
+showsVideo.onplay=()=>{
+  document.getElementById("playerPlay").textContent="❚❚";
+};
+showsVideo.onpause=()=>{
+  document.getElementById("playerPlay").textContent="▶";
+};
+</script>
+
 </body>
 </html>
