@@ -309,7 +309,7 @@ function makeCard(show){
 const image=imageUrl(show.image);
 const year=(show.premiered||"").slice(0,4);
 return `
-<div class="card" onclick="alert('Card click detected')" data-show-id="${show.id}" data-title="${safeText(show.name)}">
+<div class="card" data-show-id="${show.id}" data-title="${safeText(show.name)}">
 <div class="poster" style="background-image:url('${image}')">
 <span class="poster-label">${(show.genres||[]).slice(0,2).join(" · ")||"TV SERIES"}</span>
 </div>
