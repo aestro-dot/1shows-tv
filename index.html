@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,320 +6,662 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#08090d">
 <title>1SHOWS — The TV Edition</title>
+
 <style>
 *{box-sizing:border-box}
 :root{color-scheme:dark;--muted:#aeb5c2}
-body{margin:0;background:#08090d;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-header{padding:25px 5%;display:flex;justify-content:space-between;align-items:center}
+body{margin:0;background:#08090d;color:white;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+header{padding:24px 5%;display:flex;justify-content:space-between;align-items:center;gap:15px}
 .logo{font-size:30px;font-weight:900;letter-spacing:5px}
 .sub{font-size:10px;letter-spacing:3px;color:#9298a6}
-main{padding:15px 5% 150px;max-width:1500px;margin:auto}
+main{padding:15px 5% 145px;max-width:1500px;margin:auto}
 .page{display:none}.page.active{display:block}
 .hero{min-height:390px;border-radius:25px;padding:35px;display:flex;align-items:end;overflow:hidden;background:linear-gradient(90deg,#05070bed,#05070b30),linear-gradient(0deg,#08090d,transparent 70%),url('https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=1500') center/cover}
 .eyebrow{font-size:12px;letter-spacing:3px;color:#c5d4f4}
 h1{font-size:clamp(40px,6vw,72px);line-height:1.05;margin:15px 0}
+h2{font-size:24px;margin:0}
 p{color:#b5bac5}
 .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
-.action{padding:14px 24px;border-radius:30px;border:1px solid #ffffff40;background:#ffffff18;color:white;text-decoration:none;backdrop-filter:blur(20px)}
+.action{padding:13px 22px;border-radius:30px;border:1px solid #ffffff40;background:#ffffff18;color:white;text-decoration:none;backdrop-filter:blur(20px);cursor:pointer}
 .primary{background:white;color:#111;font-weight:700}
 .section-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin:38px 0 16px}
-h2{font-size:24px;margin:0}
 .section-note{font-size:12px;color:#858d9b}
 .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
-.card{display:block;min-width:0;background:#171c28;border:1px solid #ffffff25;border-radius:17px;overflow:hidden;color:white;text-align:left;text-decoration:none;transition:transform .25s,border-color .25s}
-.card:active{transform:scale(.98)}
-.card:hover{border-color:#ffffff70;transform:translateY(-3px)}
+.card{display:block;min-width:0;background:#171c28;border:1px solid #ffffff25;border-radius:17px;overflow:hidden;color:white;text-align:left;text-decoration:none;cursor:pointer}
+.card:hover{border-color:#ffffff80;transform:translateY(-3px)}
 .poster{aspect-ratio:2/2.85;background:#171c28 center/cover no-repeat;position:relative;display:flex;align-items:end;padding:12px}
 .poster:after{content:"";position:absolute;inset:35% 0 0;background:linear-gradient(transparent,#08090de8)}
-.poster-label{position:relative;z-index:1;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#fff;background:#0008;border:1px solid #ffffff38;border-radius:20px;padding:6px 9px;backdrop-filter:blur(12px)}
+.poster-label{position:relative;z-index:1;font-size:12px;letter-spacing:1px;text-transform:uppercase;background:#0009;border:1px solid #ffffff38;border-radius:20px;padding:6px 9px}
 .card-info{padding:12px 13px 14px}
-.card-title{font-weight:700;font-size:15px;line-height:1.25}
+.card-title{font-weight:700;font-size:15px}
 .card-meta{font-size:12px;color:#aeb5c2;margin-top:5px}
-.panel{padding:25px;border:1px solid #ffffff25;border-radius:20px;background:linear-gradient(135deg,#ffffff20,#ffffff05);backdrop-filter:blur(25px);color:#b5bac5;margin-top:20px}
-.dock{position:fixed;z-index:10;bottom:22px;left:50%;transform:translateX(-50%);width:min(470px,calc(100% - 30px));padding:10px;display:flex;justify-content:space-around;align-items:center;border:1px solid #ffffff55;border-radius:50px;background:linear-gradient(135deg,#ffffff40,#ffffff12 50%,#ffffff25);backdrop-filter:blur(45px) saturate(220%);-webkit-backdrop-filter:blur(45px) saturate(220%);box-shadow:0 18px 55px #0009,inset 0 1px 2px #ffffff80}
-.dock button{width:66px;height:66px;border:1px solid transparent;border-radius:50%;background:transparent;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.25s}
-.dock button.active{background:linear-gradient(145deg,#fff,#dce6fa);color:#172033;box-shadow:0 5px 20px #0007;transform:scale(1.06)}
-.dock svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-button:focus-visible,a:focus-visible{outline:3px solid #8bc5ff;outline-offset:4px}
-@media(max-width:850px){.cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.hero{min-height:330px}}
-@media(max-width:480px){header{padding-top:22px}.hero{padding:23px;min-height:330px}.dock{bottom:14px}.dock button{width:58px;height:58px}.card-title{font-size:14px}}
-@media(min-width:1100px){.cards{grid-template-columns:repeat(5,minmax(0,1fr))}}
+.panel{padding:24px;border:1px solid #ffffff25;border-radius:20px;background:linear-gradient(135deg,#ffffff20,#ffffff05);color:#b5bac5;margin-top:20px}
+.search-box{width:100%;padding:16px 19px;border-radius:17px;background:#171c28;border:1px solid #ffffff30;color:white;font-size:16px;outline:none;margin-top:20px}
+.search-box:focus{border-color:#aabce9}
+.dock{position:fixed;z-index:10;bottom:22px;left:50%;transform:translateX(-50%);width:min(470px,calc(100% - 30px));padding:10px;display:flex;justify-content:space-around;border:1px solid #ffffff55;border-radius:50px;background:linear-gradient(135deg,#ffffff40,#ffffff12 50%,#ffffff25);backdrop-filter:blur(45px) saturate(220%);box-shadow:0 18px 55px #0009,inset 0 1px 2px #ffffff80}
+.dock button{width:62px;height:62px;border:0;border-radius:50%;background:transparent;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.dock button.active{background:linear-gradient(145deg,#fff,#dce6fa);color:#172033}
+.dock svg{width:29px;height:29px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 
 .detail-view{position:fixed;inset:0;z-index:30;display:none;overflow:auto;background:#08090d}
 .detail-view.open{display:block}
-.detail-backdrop{min-height:68vh;padding:28px 6% 50px;display:flex;align-items:end;background-position:center;background-size:cover;position:relative}
+.detail-backdrop{min-height:62vh;padding:28px 6% 45px;display:flex;align-items:end;background-position:center;background-size:cover;position:relative}
 .detail-backdrop:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#08090d 2%,#08090d88 55%,#08090d20)}
 .detail-content{position:relative;z-index:1;max-width:760px}
-.detail-close{position:absolute;z-index:3;top:20px;left:20px;width:44px;height:44px;border-radius:50%;border:1px solid #ffffff55;background:#ffffff24;color:white;font-size:25px;backdrop-filter:blur(20px)}
-.detail-kicker{letter-spacing:3px;font-size:12px;color:#d4dcf2}
-.detail-title{font-size:clamp(38px,7vw,68px);line-height:1.05;margin:14px 0}
-.detail-meta{color:#d4d8e2;font-size:14px}
+.detail-close{position:absolute;z-index:3;top:20px;left:20px;width:45px;height:45px;border-radius:50%;border:1px solid #ffffff55;background:#ffffff24;color:white;font-size:25px}
+.detail-title{font-size:clamp(38px,7vw,68px)}
+.detail-meta{color:#d4d8e2}
 .detail-description{max-width:650px;line-height:1.6;color:#d0d4dd}
 .detail-body{padding:25px 6% 150px;max-width:1100px;margin:auto}
-.episode{display:flex;gap:14px;align-items:center;padding:15px 0;border-bottom:1px solid #ffffff20;color:#d8dbe3}
-.episode-num{color:#8d96a6;font-size:13px;min-width:28px}
-.detail-action{display:inline-flex;margin-top:12px}
-@media(max-width:600px){.detail-backdrop{min-height:62vh;padding-bottom:35px}.detail-body{padding-bottom:140px}}
 
-
-.season-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:22px 0 18px}
-.season-select{appearance:none;min-width:150px;padding:12px 42px 12px 16px;border:1px solid #ffffff35;border-radius:14px;background:#1a1f2b;color:#fff;font:inherit}
-.season-select-wrap{position:relative}
-.season-select-wrap:after{content:"⌄";position:absolute;right:15px;top:7px;color:#cbd2df;pointer-events:none;font-size:20px}
+.season-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:22px 0}
+.season-select{min-width:150px;padding:12px 16px;border:1px solid #ffffff35;border-radius:14px;background:#1a1f2b;color:white;font:inherit}
 .episode-list{display:grid;gap:13px}
-.episode-card{display:grid;grid-template-columns:150px minmax(0,1fr);gap:16px;padding:12px;border:1px solid #ffffff20;border-radius:18px;background:#151a24;align-items:center}
-.episode-art{height:92px;border-radius:11px;background:linear-gradient(135deg,#39465d,#111722);display:flex;align-items:center;justify-content:center;color:#cbd5e7;font-size:24px;font-weight:800;letter-spacing:2px}
-.episode-info{min-width:0}
-.episode-heading{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.episode-heading strong{font-size:15px}
+.episode-card{display:grid;grid-template-columns:145px minmax(0,1fr);gap:15px;padding:12px;border:1px solid #ffffff20;border-radius:18px;background:#151a24;align-items:center}
+.episode-art{height:100px;border-radius:11px;background:#252c3a center/cover;display:flex;align-items:center;justify-content:center;color:#cbd5e7;font-size:23px;font-weight:800}
+.episode-heading{display:flex;justify-content:space-between;gap:10px}
 .episode-runtime{font-size:12px;color:#969eac;white-space:nowrap}
-.episode-copy{font-size:13px;line-height:1.45;color:#aeb5c2;margin:7px 0}
-.episode-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.episode-watch{font-size:12px;padding:8px 14px}
-.watched-toggle{border:0;background:transparent;color:#aeb5c2;font-size:12px;padding:7px 0;cursor:pointer}
+.episode-copy{font-size:13px;line-height:1.5;margin:8px 0}
+.episode-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.episode-watch{font-size:12px;padding:8px 13px}
+.watched-toggle{border:0;background:transparent;color:#aeb5c2;font-size:12px;padding:8px 0;cursor:pointer}
 .watched-toggle.done{color:#9bd6b1}
-.progress-line{height:4px;background:#ffffff18;border-radius:5px;overflow:hidden;margin-top:12px}
-.progress-fill{height:100%;width:0;background:#dce6fa;border-radius:5px;transition:width .2s}
-@media(max-width:520px){.episode-card{grid-template-columns:104px minmax(0,1fr);gap:11px;padding:9px}.episode-art{height:82px;font-size:18px}.episode-heading{display:block}.episode-runtime{display:block;margin-top:3px}.episode-copy{font-size:12px}}
-
+.progress-line{height:4px;background:#ffffff18;border-radius:5px;overflow:hidden;margin-top:10px}
+.progress-fill{height:100%;background:#dce6fa;border-radius:5px}
+.save-button{margin-top:12px}
+.empty{padding:25px;border:1px solid #ffffff20;border-radius:18px;color:#aeb5c2}
+.loading{padding:35px;text-align:center;color:#aeb5c2}
+@media(max-width:850px){.cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.hero{min-height:330px}}
+@media(max-width:520px){
+header{padding-top:22px}
+.hero{padding:23px;min-height:330px}
+.dock{bottom:14px}
+.dock button{width:56px;height:56px}
+.card-title{font-size:14px}
+.episode-card{grid-template-columns:100px minmax(0,1fr);gap:10px;padding:9px}
+.episode-art{height:85px;font-size:18px}
+.episode-heading{display:block}
+.episode-runtime{display:block;margin-top:4px}
+.episode-copy{font-size:12px}
+}
+@media(min-width:1100px){.cards{grid-template-columns:repeat(5,minmax(0,1fr))}}
 </style>
 </head>
+
 <body>
+
 <header>
-<div><div class="logo">1SHOWS</div><div class="sub">THE TV EDITION</div></div>
+<div>
+<div class="logo">1SHOWS</div>
+<div class="sub">THE TV EDITION</div>
+</div>
 <div class="sub">STREAMING</div>
 </header>
+
 <main>
+
+<!-- TV SHOWS -->
 <section class="page active" id="shows">
-<div class="hero"><div>
+
+<div class="hero">
+<div>
 <div class="eyebrow">SERIES · SEASONS · EPISODES</div>
 <h1>Stories worth<br>watching.</h1>
 <p>Discover your next favourite series.</p>
-<div class="actions"><a class="action primary" href="https://www.1shows.org/">Explore TV Shows</a></div>
-</div></div>
-<div class="section-head"><h2>Featured TV Shows</h2><span class="section-note">SERIES</span></div>
-<div class="cards">
-<a class="card" href="https://www.1shows.org/" data-title="Stranger Things" data-kind="series" data-genre="Sci-fi · Drama" data-year="2016" data-rating="8.7" data-description="A group of friends uncover mysterious experiments and supernatural forces in their small town." data-art="https://image.tmdb.org/t/p/w500/49WJfeN0moxb9IPfGn8AIqMGskD.jpg"><div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/49WJfeN0moxb9IPfGn8AIqMGskD.jpg')"><span class="poster-label">Sci-fi · Drama</span></div><div class="card-info"><div class="card-title">Stranger Things</div><div class="card-meta">Mystery · 2016</div></div></a>
-<a class="card" href="https://www.1shows.org/" data-title="Breaking Bad" data-kind="series" data-genre="Crime · Drama" data-year="2008" data-rating="9.5" data-description="A chemistry teacher turns to the criminal underworld, changing his life and the lives around him." data-art="https://image.tmdb.org/t/p/w500/ztkUQFLlC19CCMYHW9o1zWhJRNq.jpg"><div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/ztkUQFLlC19CCMYHW9o1zWhJRNq.jpg')"><span class="poster-label">Crime · Drama</span></div><div class="card-info"><div class="card-title">Breaking Bad</div><div class="card-meta">Crime · 2008</div></div></a>
-<a class="card" href="https://www.1shows.org/" data-title="The Office" data-kind="series" data-genre="Comedy" data-year="2005" data-rating="9.0" data-description="A mockumentary look at the daily lives of the employees of a paper company." data-art="https://image.tmdb.org/t/p/w500/7DJKHzAi83BmQrWLrYYOqcoKfhR.jpg"><div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/7DJKHzAi83BmQrWLrYYOqcoKfhR.jpg')"><span class="poster-label">Comedy</span></div><div class="card-info"><div class="card-title">The Office</div><div class="card-meta">Comedy · 2005</div></div></a>
+</div>
+</div>
+
+<input class="search-box" id="searchInput" type="search" placeholder="Search TV shows..." autocomplete="off">
+
+<div id="searchResults"></div>
+
+<div class="section-head">
+<h2>Featured TV Shows</h2>
+<span class="section-note">SERIES</span>
+</div>
+
+<div class="cards" id="featuredShows">
+
+<div class="card" data-title="Stranger Things">
+<div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/49WJfeN0moxb9IPfGn8AIqMGskD.jpg')">
+<span class="poster-label">Sci-fi · Drama</span>
+</div>
+<div class="card-info">
+<div class="card-title">Stranger Things</div>
+<div class="card-meta">Mystery · 2016</div>
+</div>
+</div>
+
+<div class="card" data-title="Breaking Bad">
+<div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/ztkUQFLlC19CCMYHW9o1zWhJRNq.jpg')">
+<span class="poster-label">Crime · Drama</span>
+</div>
+<div class="card-info">
+<div class="card-title">Breaking Bad</div>
+<div class="card-meta">Crime · 2008</div>
+</div>
+</div>
+
+<div class="card" data-title="The Office">
+<div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/7DJKHzAi83BmQrWLrYYOqcoKfhR.jpg')">
+<span class="poster-label">Comedy</span>
+</div>
+<div class="card-info">
+<div class="card-title">The Office</div>
+<div class="card-meta">Comedy · 2005</div>
+</div>
+</div>
 
 </div>
-<div class="panel">Your dedicated home for television series, seasons and episodes. Movies have their own separate section.</div>
+
+<div class="section-head">
+<h2>Continue Watching</h2>
+<span class="section-note">YOUR PROGRESS</span>
+</div>
+<div id="continueList" class="panel">Your viewing progress will appear here.</div>
+
 </section>
 
+<!-- MOVIES -->
 <section class="page" id="movies">
-<div class="hero"><div>
+
+<div class="hero">
+<div>
 <div class="eyebrow">FEATURE FILMS · CINEMA</div>
 <h1>Movie night.<br>Every night.</h1>
 <p>Discover your next favourite film.</p>
-<div class="actions"><a class="action primary" href="https://www.1shows.org/">Explore Movies</a></div>
-</div></div>
-<div class="section-head"><h2>Featured Movies</h2><span class="section-note">FILMS</span></div>
+</div>
+</div>
+
+<div class="section-head">
+<h2>Featured Movies</h2>
+<span class="section-note">FILMS</span>
+</div>
+
 <div class="cards">
-<a class="card" href="https://www.1shows.org/" data-title="Interstellar" data-kind="movie" data-genre="Sci-fi · Adventure" data-year="2014" data-rating="8.7" data-description="A team of explorers travels beyond this galaxy to discover whether mankind has a future among the stars." data-art="https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg"><div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg')"><span class="poster-label">Sci-fi · 2014</span></div><div class="card-info"><div class="card-title">Interstellar</div><div class="card-meta">Adventure · Drama</div></div></a>
-<a class="card" href="https://www.1shows.org/" data-title="Dune: Part Two" data-kind="movie" data-genre="Sci-fi · Adventure" data-year="2024" data-rating="8.5" data-description="Paul Atreides unites with Chani and the Fremen while seeking revenge against the conspirators who destroyed his family." data-art="https://image.tmdb.org/t/p/w500/d5NXSklXo0qyIYkgV94XAgMIckC.jpg"><div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/d5NXSklXo0qyIYkgV94XAgMIckC.jpg')"><span class="poster-label">Sci-fi · 2024</span></div><div class="card-info"><div class="card-title">Dune: Part Two</div><div class="card-meta">Adventure · Drama</div></div></a>
-<a class="card" href="https://www.1shows.org/" data-title="Fight Club" data-kind="movie" data-genre="Drama · Thriller" data-year="1999" data-rating="8.8" data-description="An office worker and a soap maker form an underground fight club that evolves into something much bigger." data-art="https://image.tmdb.org/t/p/w500/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg"><div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg')"><span class="poster-label">Drama · 1999</span></div><div class="card-info"><div class="card-title">Fight Club</div><div class="card-meta">Thriller · Drama</div></div></a>
-<a class="card" href="https://www.1shows.org/" data-title="The Shawshank Redemption" data-kind="movie" data-genre="Drama" data-year="1994" data-rating="9.3" data-description="Two imprisoned men bond over years, finding solace and redemption through acts of common decency." data-art="https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg"><div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg')"><span class="poster-label">Drama · 1994</span></div><div class="card-info"><div class="card-title">The Shawshank Redemption</div><div class="card-meta">Drama</div></div></a>
-<a class="card" href="https://www.1shows.org/movies/1423191-resident-evil?streaming=true" data-title="Resident Evil" data-kind="movie" data-genre="Horror" data-year="2026" data-rating="7.5" data-description="A medical courier finds himself caught in a terrifying outbreak." data-art="https://images.unsplash.com/photo-1509248961158-e54f6934749c?w=700"><div class="poster" style="background-image:url('https://images.unsplash.com/photo-1509248961158-e54f6934749c?w=700')"><span class="poster-label">Horror · 1h 34m</span></div><div class="card-info"><div class="card-title">Resident Evil</div><div class="card-meta">Horror · Watch on 1Shows</div></div></a>
+
+<div class="card movie" data-title="Interstellar" data-kind="movie" data-year="2014" data-description="A team of explorers travels beyond this galaxy to discover whether mankind has a future among the stars." data-art="https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg">
+<div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg')"></div>
+<div class="card-info"><div class="card-title">Interstellar</div><div class="card-meta">Adventure · Drama</div></div>
+</div>
+
+<div class="card movie" data-title="Dune: Part Two" data-kind="movie" data-year="2024" data-description="Paul Atreides unites with Chani and the Fremen while seeking revenge against those who destroyed his family." data-art="https://image.tmdb.org/t/p/w500/d5NXSklXo0qyIYkgV94XAgMIckC.jpg">
+<div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/d5NXSklXo0qyIYkgV94XAgMIckC.jpg')"></div>
+<div class="card-info"><div class="card-title">Dune: Part Two</div><div class="card-meta">Sci-fi · 2024</div></div>
+</div>
+
+<div class="card movie" data-title="Fight Club" data-kind="movie" data-year="1999" data-description="An office worker and a soap maker form an underground fight club." data-art="https://image.tmdb.org/t/p/w500/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg">
+<div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg')"></div>
+<div class="card-info"><div class="card-title">Fight Club</div><div class="card-meta">Thriller · 1999</div></div>
+</div>
+
+<div class="card movie" data-title="The Shawshank Redemption" data-kind="movie" data-year="1994" data-description="Two imprisoned men bond over years, finding solace and redemption." data-art="https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg">
+<div class="poster" style="background-image:url('https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg')"></div>
+<div class="card-info"><div class="card-title">The Shawshank Redemption</div><div class="card-meta">Drama · 1994</div></div>
+</div>
+
 </div>
 </section>
 
+<!-- SPORTS -->
 <section class="page" id="sports">
-<div class="hero"><div>
+<div class="hero">
+<div>
 <div class="eyebrow">LIVE · MATCHES · HIGHLIGHTS</div>
 <h1>Feel every<br>moment.</h1>
 <p>Your destination for sports.</p>
-<div class="actions"><a class="action primary" href="https://www.1shows.org/">Explore</a></div>
-</div></div>
+</div>
+</div>
 <h2 style="margin-top:38px">Sports Hub</h2>
 <div class="panel">Your dedicated sports destination. Sports listings and live feeds will be connected in a future update.</div>
 </section>
 
+<!-- LIBRARY -->
 <section class="page" id="library">
-<div class="hero"><div>
+<div class="hero">
+<div>
 <div class="eyebrow">YOUR PERSONAL COLLECTION</div>
 <h1>Your library.<br>Your favourites.</h1>
 <p>Everything you want to watch.</p>
-</div></div>
-<h2 style="margin-top:38px">Saved Titles</h2>
-<div id="saved" class="panel">Your library is ready. Save titles as we add catalogue features.</div>
-<h2 style="margin-top:38px">Quick Access</h2>
+</div>
+</div>
+
+<div class="section-head"><h2>My List</h2></div>
+<div id="savedList" class="panel">Your saved titles will appear here.</div>
+
+<div class="section-head"><h2>Quick Access</h2></div>
 <div class="actions">
 <a class="action primary" href="https://www.1shows.org/">Open 1Shows</a>
-<a class="action" href="https://www.1shows.org/movies/1423191-resident-evil?streaming=true">Resident Evil</a>
 </div>
 </section>
+
 </main>
 
+<!-- NAVIGATION -->
 <nav class="dock" aria-label="Main navigation">
-<button class="active" data-page="shows" aria-label="Show" title="Show"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 3v18M17 3v18M3 8h4m-4 8h4m10-8h4m-4 8h4"/></svg></button>
-<button data-page="movies" aria-label="Movie" title="Movie"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 22h8m-4-4v4"/></svg></button>
-<button data-page="sports" aria-label="Sports" title="Sports"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m12 2 3 6-3 4-6-1-4-5m18 0-5 5 2 6-5 5-5-4 1-6m0-4 6 3 4-3"/></svg></button>
-<button data-page="library" aria-label="Library" title="Library"><svg viewBox="0 0 24 24"><path d="M4 4h16v17H4zM8 2h8M8 8h8m-8 4h8m-8 4h5"/></svg></button>
+
+<button class="active" data-page="shows" aria-label="TV Shows">
+<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 3v18M17 3v18M3 8h4m-4 8h4m10-8h4m-4 8h4"/></svg>
+</button>
+
+<button data-page="movies" aria-label="Movies">
+<svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 22h8m-4-4v4"/></svg>
+</button>
+
+<button data-page="sports" aria-label="Sports">
+<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m12 2 3 6-3 4-6-1-4-5m18 0-5 5 2 6-5 5-5-4 1-6"/></svg>
+</button>
+
+<button data-page="library" aria-label="Library">
+<svg viewBox="0 0 24 24"><path d="M4 4h16v17H4zM8 2h8M8 8h8m-8 4h8m-8 4h5"/></svg>
+</button>
+
 </nav>
 
+<!-- DETAILS -->
 <div class="detail-view" id="detailView" aria-hidden="true">
-  <button class="detail-close" id="detailClose" aria-label="Close details">×</button>
-  <div class="detail-backdrop" id="detailBackdrop">
-    <div class="detail-content">
-      <div class="detail-kicker" id="detailKicker">FEATURED TITLE</div>
-      <h1 class="detail-title" id="detailTitle"></h1>
-      <div class="detail-meta" id="detailMeta"></div>
-      <p class="detail-description" id="detailDescription"></p>
-      <a class="action primary detail-action" id="detailWatch" href="https://www.1shows.org/">Watch on 1Shows</a>
-    </div>
-  </div>
-  <div class="detail-body" id="detailBody"></div>
+
+<button class="detail-close" id="detailClose">×</button>
+
+<div class="detail-backdrop" id="detailBackdrop">
+<div class="detail-content">
+<div class="eyebrow" id="detailKicker">TV SERIES</div>
+<h1 class="detail-title" id="detailTitle"></h1>
+<div class="detail-meta" id="detailMeta"></div>
+<p class="detail-description" id="detailDescription"></p>
+<button class="action primary save-button" id="saveButton">＋ Add to My List</button>
+<a class="action primary" id="detailWatch" href="https://www.1shows.org/" target="_blank" rel="noopener">Watch on 1Shows</a>
+</div>
+</div>
+
+<div class="detail-body" id="detailBody"></div>
+
 </div>
 
 <script>
-
-
-const seriesCatalogue = {
-  "Stranger Things": {
-    seasons: {
-      "1": [
-        ["The Vanishing of Will Byers","A boy disappears, and his friends begin searching for answers as a mysterious girl appears.", "48 min"],
-        ["The Weirdo on Maple Street","The group hides their new friend while Joyce searches for signs that Will may still be alive.", "55 min"],
-        ["Holly, Jolly","A growing mystery leads the search in a frightening new direction.", "51 min"],
-        ["The Body","The town reacts to devastating news while the children try to prove what they believe.", "49 min"],
-        ["The Flea and the Acrobat","The group develops a theory about where Will might be.", "53 min"],
-        ["The Monster","Hopper investigates the laboratory, and the danger surrounding the children becomes clearer.", "53 min"],
-        ["The Bathtub","Eleven helps the group search for Will while Nancy and Jonathan prepare to fight back.", "46 min"],
-        ["The Upside Down","The search reaches its climax as the friends face the force behind the disappearances.", "54 min"]
-      ]
-    },
-    seasonLabels: ["Season 1"]
-  },
-  "Breaking Bad": {
-    seasons: {
-      "1": [
-        ["Pilot","A chemistry teacher receives life-changing news and makes a dangerous decision.", "58 min"],
-        ["Cat's in the Bag...","Walt and Jesse struggle to manage the consequences of their first deal.", "48 min"],
-        ["...And the Bag's in the River","Walt faces a difficult moral choice while trying to keep his secret.", "48 min"],
-        ["Cancer Man","Walt's family learns more about his diagnosis, and Jesse faces trouble at home.", "48 min"],
-        ["Gray Matter","An invitation forces Walt to confront his pride and his past.", "48 min"],
-        ["Crazy Handful of Nothin'","Walt takes a bold step to establish himself in the drug trade.", "48 min"],
-        ["A No-Rough-Stuff-Type Deal","Walt and Jesse plan their next move as pressure builds around them.", "48 min"]
-      ]
-    },
-    seasonLabels: ["Season 1"]
-  },
-  "The Office": {
-    seasons: {
-      "1": [
-        ["Pilot","Meet the staff of Dunder Mifflin as a documentary crew begins filming their workplace.", "23 min"],
-        ["Diversity Day","A company training session takes an awkward turn.", "22 min"],
-        ["Health Care","Michael delegates an unpopular task and tries to keep the office happy.", "22 min"],
-        ["The Alliance","Dwight's job-security worries lead to an unexpected office alliance.", "22 min"],
-        ["Basketball","The office takes its rivalries to the basketball court.", "22 min"],
-        ["Hot Girl","A visiting saleswoman distracts the office and sparks a series of awkward moments.", "22 min"]
-      ]
-    },
-    seasonLabels: ["Season 1"]
-  }
+const API="https://api.tvmaze.com";
+const STORE={
+saved:"1shows_saved_v1",
+watched:"1shows_watched_v1",
+progress:"1shows_progress_v1"
 };
 
-function renderSeriesCatalogue(title){
-  const data=seriesCatalogue[title];
-  if(!data) return `<h2>Seasons & episodes</h2><div class="panel">The episode guide for this series is being prepared.</div>`;
-  const seasons=Object.keys(data.seasons);
-  const options=seasons.map(s=>`<option value="${s}">${data.seasonLabels[Number(s)-1]||`Season ${s}`}</option>`).join("");
-  return `<div class="section-head"><h2>Seasons & episodes</h2><span class="section-note">EPISODE GUIDE</span></div>
-    <div class="season-toolbar"><span class="section-note" id="episodeCount">${data.seasons[seasons[0]].length} EPISODES</span>
-      <label class="season-select-wrap"><select class="season-select" id="seasonSelect" aria-label="Choose season">${options}</select></label>
-    </div>
-    <div class="episode-list" id="episodeList"></div>
-    <p class="section-note" style="margin-top:16px">Episode information is for browsing. Playback availability depends on the linked streaming catalogue.</p>`;
+let currentShow=null;
+let currentSeason="";
+
+function readStore(key){
+try{return JSON.parse(localStorage.getItem(key)||"{}")}
+catch(e){return {}}
 }
 
-function paintEpisodes(title,season){
-  const data=seriesCatalogue[title];
-  const list=document.getElementById('episodeList');
-  if(!data||!list)return;
-  const episodes=data.seasons[season]||[];
-  const count=document.getElementById('episodeCount');
-  if(count)count.textContent=`${episodes.length} EPISODES`;
-  list.innerHTML=episodes.map((ep,i)=>{
-    const key=`1shows-watched-${title}-${season}-${i}`;
-    const watched=localStorage.getItem(key)==='yes';
-    const num=String(i+1).padStart(2,'0');
-    return `<article class="episode-card">
-      <div class="episode-art" aria-hidden="true">${num}</div>
-      <div class="episode-info">
-        <div class="episode-heading"><strong>${num}. ${ep[0]}</strong><span class="episode-runtime">${ep[2]}</span></div>
-        <p class="episode-copy">${ep[1]}</p>
-        <div class="episode-actions">
-          <a class="action primary episode-watch" href="https://www.1shows.org/" target="_blank" rel="noopener">Find episode</a>
-          <button class="watched-toggle ${watched?'done':''}" data-watch-key="${encodeURIComponent(key)}">${watched?'✓ Watched':'＋ Mark watched'}</button>
-        </div>
-        <div class="progress-line"><div class="progress-fill" style="width:${watched?'100':'0'}%"></div></div>
-      </div>
-    </article>`;
-  }).join('');
-  list.querySelectorAll('.watched-toggle').forEach(button=>{
-    button.addEventListener('click',()=>{
-      const key=decodeURIComponent(button.dataset.watchKey);
-      const done=localStorage.getItem(key)==='yes';
-      if(done)localStorage.removeItem(key);else localStorage.setItem(key,'yes');
-      paintEpisodes(title,season);
-    });
-  });
+function writeStore(key,value){
+localStorage.setItem(key,JSON.stringify(value));
 }
 
+function safeText(value){
+return String(value||"").replace(/<[^>]*>/g,"").trim();
+}
 
-const detailView=document.getElementById('detailView');
-const detailBackdrop=document.getElementById('detailBackdrop');
-const detailTitle=document.getElementById('detailTitle');
-const detailMeta=document.getElementById('detailMeta');
-const detailDescription=document.getElementById('detailDescription');
-const detailKicker=document.getElementById('detailKicker');
-const detailBody=document.getElementById('detailBody');
-const detailWatch=document.getElementById('detailWatch');
-document.querySelectorAll('.card[data-title]').forEach(card=>{
-  card.addEventListener('click',event=>{
-    event.preventDefault();
-    const d=card.dataset;
-    detailTitle.textContent=d.title;
-    detailKicker.textContent=d.kind==='series'?'TV SERIES':'FEATURE FILM';
-    detailMeta.textContent=`${d.year}  ·  ${d.genre}  ·  ★ ${d.rating}`;
-    detailDescription.textContent=d.description;
-    detailBackdrop.style.backgroundImage=`linear-gradient(90deg,#05070bea,#05070b38),linear-gradient(0deg,#08090d,transparent 75%),url("${d.art}")`;
-    detailWatch.href=d.title==='Resident Evil'
-      ?'https://www.1shows.org/movies/1423191-resident-evil?streaming=true'
-      :'https://www.1shows.org/';
-    detailBody.innerHTML=d.kind==='series'
-      ? renderSeriesCatalogue(d.title)
-      : `<h2>About this movie</h2><p class="detail-description">${d.description}</p><p class="section-note">Choose Watch on 1Shows to open the available title page.</p>`;
-    detailView.classList.add('open');
-    detailView.setAttribute('aria-hidden','false');
-    if(d.kind==='series' && seriesCatalogue[d.title]){
-      const seasonSelect=document.getElementById('seasonSelect');
-      if(seasonSelect){
-        paintEpisodes(d.title,seasonSelect.value);
-        seasonSelect.onchange=()=>paintEpisodes(d.title,seasonSelect.value);
-      }
-    }
-    document.body.style.overflow='hidden';
-    detailView.scrollTop=0;
-  });
+function imageUrl(image,fallback=""){
+return image?.original||image?.medium||fallback;
+}
+
+function makeCard(show){
+const image=imageUrl(show.image);
+const year=(show.premiered||"").slice(0,4);
+return `
+<div class="card" data-show-id="${show.id}" data-title="${safeText(show.name)}">
+<div class="poster" style="background-image:url('${image}')">
+<span class="poster-label">${(show.genres||[]).slice(0,2).join(" · ")||"TV SERIES"}</span>
+</div>
+<div class="card-info">
+<div class="card-title">${safeText(show.name)}</div>
+<div class="card-meta">${year} · ${(show.genres||[]).join(" · ")}</div>
+</div>
+</div>`;
+}
+
+async function getShow(query){
+const response=await fetch(`${API}/singlesearch/shows?q=${encodeURIComponent(query)}&embed=episodes`);
+if(!response.ok)throw new Error("Show unavailable");
+return await response.json();
+}
+
+async function getShowById(id){
+const response=await fetch(`${API}/shows/${id}?embed=episodes`);
+if(!response.ok)throw new Error("Show unavailable");
+return await response.json();
+}
+
+function openPage(id){
+document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===id));
+document.querySelectorAll(".dock button").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
+window.scrollTo({top:0,behavior:"smooth"});
+if(id==="library")renderSaved();
+if(id==="shows")renderContinue();
+}
+
+document.querySelectorAll(".dock button").forEach(button=>{
+button.addEventListener("click",()=>openPage(button.dataset.page));
 });
+
+// SEARCH
+let searchTimer;
+
+document.getElementById("searchInput").addEventListener("input",event=>{
+const query=event.target.value.trim();
+clearTimeout(searchTimer);
+
+const result=document.getElementById("searchResults");
+
+if(query.length<2){
+result.innerHTML="";
+return;
+}
+
+result.innerHTML='<div class="loading">Searching TV catalogue...</div>';
+
+searchTimer=setTimeout(async()=>{
+try{
+const response=await fetch(`${API}/search/shows?q=${encodeURIComponent(query)}`);
+if(!response.ok)throw new Error();
+const results=await response.json();
+
+if(!results.length){
+result.innerHTML='<div class="empty">No shows found. Try another title.</div>';
+return;
+}
+
+result.innerHTML=`
+<div class="section-head"><h2>Search Results</h2></div>
+<div class="cards">${results.slice(0,12).map(item=>makeCard(item.show)).join("")}</div>`;
+
+}catch(e){
+result.innerHTML='<div class="empty">Could not connect to the TV catalogue. Please try again.</div>';
+}
+},450);
+});
+
+// OPEN SHOW DETAILS
+document.addEventListener("click",async event=>{
+const card=event.target.closest("[data-show-id]");
+if(card){
+await openShow(Number(card.dataset.showId));
+return;
+}
+
+const movie=event.target.closest(".movie");
+if(movie){
+openMovie(movie);
+}
+});
+
+async function openShow(id){
+const view=document.getElementById("detailView");
+view.classList.add("open");
+view.setAttribute("aria-hidden","false");
+document.body.style.overflow="hidden";
+
+document.getElementById("detailBody").innerHTML='<div class="loading">Loading complete episode catalogue...</div>';
+
+try{
+const show=await getShowById(id);
+currentShow=show;
+
+const episodes=show._embedded?.episodes||[];
+
+document.getElementById("detailTitle").textContent=show.name;
+document.getElementById("detailKicker").textContent="TV SERIES";
+document.getElementById("detailMeta").textContent=
+`${(show.premiered||"").slice(0,4)} · ${(show.genres||[]).join(" · ")} · ★ ${show.rating?.average||"N/A"}`;
+
+document.getElementById("detailDescription").textContent=safeText(show.summary)||"Discover this television series.";
+
+document.getElementById("detailBackdrop").style.backgroundImage=
+`linear-gradient(90deg,#05070bea,#05070b38),linear-gradient(0deg,#08090d,transparent 75%),url("${imageUrl(show.image)}")`;
+
+document.getElementById("detailWatch").href="https://www.1shows.org/";
+
+updateSaveButton();
+
+renderEpisodes(show,episodes);
+
+}catch(e){
+document.getElementById("detailBody").innerHTML=
+'<div class="empty">Unable to load this show right now. Please check your internet connection and try again.</div>';
+}
+}
+
+function renderEpisodes(show,episodes){
+const seasons=[...new Set(episodes.map(e=>e.season))].sort((a,b)=>a-b);
+
+if(!seasons.length){
+document.getElementById("detailBody").innerHTML='<div class="empty">No episode information is available yet.</div>';
+return;
+}
+
+currentSeason=String(seasons[0]);
+
+document.getElementById("detailBody").innerHTML=`
+<div class="section-head">
+<h2>Seasons & episodes</h2>
+<span class="section-note">${episodes.length} EPISODES</span>
+</div>
+
+<div class="season-toolbar">
+<span class="section-note">SELECT SEASON</span>
+<select class="season-select" id="seasonSelect">
+${seasons.map(s=>`<option value="${s}">Season ${s}</option>`).join("")}
+</select>
+</div>
+
+<div id="episodeList" class="episode-list"></div>
+`;
+
+document.getElementById("seasonSelect").addEventListener("change",event=>{
+currentSeason=event.target.value;
+paintEpisodes(show,episodes,currentSeason);
+});
+
+paintEpisodes(show,episodes,currentSeason);
+}
+
+function paintEpisodes(show,episodes,season){
+const list=document.getElementById("episodeList");
+const watched=readStore(STORE.watched);
+const progress=readStore(STORE.progress);
+
+const selected=episodes.filter(ep=>String(ep.season)===String(season));
+
+list.innerHTML=selected.map(ep=>{
+const key=`${show.id}-${ep.id}`;
+const done=!!watched[key];
+const started=!!progress[key];
+const art=imageUrl(ep.image,imageUrl(show.image));
+const description=safeText(ep.summary)||"Episode information is available in the catalogue.";
+const runtime=ep.runtime?`${ep.runtime} min`:"Runtime unavailable";
+
+return `
+<article class="episode-card">
+<div class="episode-art" style="background-image:url('${art}')">
+${art?"":String(ep.number).padStart(2,"0")}
+</div>
+<div>
+<div class="episode-heading">
+<strong>${String(ep.number).padStart(2,"0")}. ${safeText(ep.name)}</strong>
+<span class="episode-runtime">${runtime}</span>
+</div>
+
+<p class="episode-copy">${description}</p>
+
+<div class="episode-actions">
+<button class="action primary episode-watch"
+data-start="${key}"
+data-episode="${ep.id}"
+data-season="${ep.season}"
+data-number="${ep.number}"
+data-name="${encodeURIComponent(ep.name)}">
+${started?"Continue":"Start episode"}
+</button>
+
+<button class="watched-toggle ${done?"done":""}" data-toggle="${key}">
+${done?"✓ Watched":"＋ Mark watched"}
+</button>
+</div>
+
+<div class="progress-line">
+<div class="progress-fill" style="width:${done?"100":started?"25":"0"}%"></div>
+</div>
+</div>
+</article>`;
+}).join("");
+
+list.querySelectorAll("[data-start]").forEach(button=>{
+button.addEventListener("click",()=>{
+const progress=readStore(STORE.progress);
+const key=button.dataset.start;
+
+progress[key]={
+showId:show.id,
+title:show.name,
+episodeId:button.dataset.episode,
+season:button.dataset.season,
+number:button.dataset.number,
+episodeName:decodeURIComponent(button.dataset.name),
+image:imageUrl(show.image)
+};
+
+writeStore(STORE.progress,progress);
+renderContinue();
+
+button.textContent="Continue";
+});
+});
+
+list.querySelectorAll("[data-toggle]").forEach(button=>{
+button.addEventListener("click",()=>{
+const watched=readStore(STORE.watched);
+const key=button.dataset.toggle;
+
+if(watched[key])delete watched[key];
+else watched[key]=true;
+
+writeStore(STORE.watched,watched);
+paintEpisodes(show,episodes,season);
+});
+});
+}
+
+// MY LIST
+function updateSaveButton(){
+if(!currentShow)return;
+const saved=readStore(STORE.saved);
+const exists=!!saved[currentShow.id];
+
+const button=document.getElementById("saveButton");
+button.textContent=exists?"✓ Added to My List":"＋ Add to My List";
+}
+
+document.getElementById("saveButton").addEventListener("click",()=>{
+if(!currentShow)return;
+
+const saved=readStore(STORE.saved);
+
+if(saved[currentShow.id])delete saved[currentShow.id];
+else saved[currentShow.id]={
+id:currentShow.id,
+name:currentShow.name,
+image:imageUrl(currentShow.image),
+genres:currentShow.genres||[],
+premiered:currentShow.premiered
+};
+
+writeStore(STORE.saved,saved);
+updateSaveButton();
+renderSaved();
+});
+
+function renderSaved(){
+const saved=Object.values(readStore(STORE.saved));
+const container=document.getElementById("savedList");
+
+if(!saved.length){
+container.innerHTML="Your list is empty. Open a TV show and tap Add to My List.";
+return;
+}
+
+container.className="";
+container.innerHTML=`<div class="cards">${saved.map(show=>makeCard(show)).join("")}</div>`;
+}
+
+// CONTINUE WATCHING
+function renderContinue(){
+const progress=Object.values(readStore(STORE.progress));
+const container=document.getElementById("continueList");
+
+if(!progress.length){
+container.className="panel";
+container.innerHTML="Start an episode to see your viewing progress here.";
+return;
+}
+
+container.className="";
+container.innerHTML=`<div class="cards">
+${progress.map(item=>`
+<div class="card" data-show-id="${item.showId}">
+<div class="poster" style="background-image:url('${item.image||""}')">
+<span class="poster-label">CONTINUE WATCHING</span>
+</div>
+<div class="card-info">
+<div class="card-title">${item.title}</div>
+<div class="card-meta">S${item.season} · E${item.number} · ${item.episodeName}</div>
+</div>
+</div>`).join("")}
+</div>`;
+}
+
+// MOVIE DETAILS
+function openMovie(movie){
+const d=movie.dataset;
+const view=document.getElementById("detailView");
+
+currentShow=null;
+
+document.getElementById("detailTitle").textContent=d.title;
+document.getElementById("detailKicker").textContent="FEATURE FILM";
+document.getElementById("detailMeta").textContent=d.year+" · FEATURE FILM";
+document.getElementById("detailDescription").textContent=d.description;
+document.getElementById("detailBackdrop").style.backgroundImage=
+`linear-gradient(90deg,#05070bea,#05070b38),linear-gradient(0deg,#08090d,transparent 75%),url("${d.art}")`;
+
+document.getElementById("saveButton").style.display="none";
+document.getElementById("detailWatch").href="https://www.1shows.org/";
+document.getElementById("detailBody").innerHTML=
+`<h2>About this movie</h2><p>${d.description}</p>`;
+
+view.classList.add("open");
+view.setAttribute("aria-hidden","false");
+document.body.style.overflow="hidden";
+}
+
+// CLOSE DETAILS
 function closeDetails(){
-  detailView.classList.remove('open');
-  detailView.setAttribute('aria-hidden','true');
-  document.body.style.overflow='';
+document.getElementById("detailView").classList.remove("open");
+document.getElementById("detailView").setAttribute("aria-hidden","true");
+document.body.style.overflow="";
+document.getElementById("saveButton").style.display="";
 }
-document.getElementById('detailClose').addEventListener('click',closeDetails);
 
-const buttons=document.querySelectorAll('.dock button');
-buttons.forEach(button=>{
-button.addEventListener('click',()=>{
-const target=button.dataset.page;
-document.querySelectorAll('.page').forEach(page=>page.classList.toggle('active',page.id===target));
-buttons.forEach(b=>b.classList.toggle('active',b===button));
-window.scrollTo({top:0,behavior:'smooth'});
+document.getElementById("detailClose").addEventListener("click",closeDetails);
+
+document.addEventListener("keydown",event=>{
+if(event.key==="Escape")closeDetails();
 });
-});
+
+// INITIALISE
+renderSaved();
+renderContinue();
 </script>
+
 </body>
 </html>
