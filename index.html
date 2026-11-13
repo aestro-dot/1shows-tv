@@ -659,7 +659,10 @@ document.getElementById("detailBackdrop").style.backgroundImage=
 `linear-gradient(90deg,#05070bea,#05070b38),linear-gradient(0deg,#08090d,transparent 75%),url("${d.art}")`;
 
 document.getElementById("saveButton").style.display="none";
-document.getElementById("detailWatch").href="https://www.1shows.org/";
+document.getElementById("detailWatch").href =
+  d.source || "https://www.1shows.org/";
+document.getElementById("detailWatch").textContent =
+  "▶ Play on Main 2";
 document.getElementById("detailBody").innerHTML=
 `<h2>About this movie</h2><p>${d.description}</p>`;
 
