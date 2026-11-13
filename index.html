@@ -381,39 +381,41 @@ result.innerHTML='<div class="empty">Could not connect to the TV catalogue. Plea
 },450);
 });
 
+  
 // OPEN SHOW DETAILS — FIXED
 document.addEventListener("click", async event => {
-
-  const card = event.target.closest(".card[data-show-id]");
-
-  if (card) {
-    event.preventDefault();
-
-    const id = card.getAttribute("data-show-id");
-
-    if (!id || id === "undefined") {
-      alert("Show ID is missing. Please reload the catalogue.");
-      return;
-    }
-
-    try {
-      await openShow(Number(id));
-    } catch (error) {
-      console.error("Show opening error:", error);
-      alert("Unable to load this show. Please try again.");
-    }
-
-    return;
-  }
-
   const movie = event.target.closest(".movie");
 
   if (movie) {
     event.preventDefault();
     openMovie(movie);
+    return;
   }
 
+  const card = event.target.closest(".card");
+  if (!card) return;
+
+  event.preventDefault();
+
+  try {
+    if (card.dataset.showId) {
+      await openShow(Number(card.dataset.showId));
+    } else if (card.dataset.title) {
+      const show = await getShow(card.dataset.title);
+      await openShow(show.id);
+    }
+  } catch (error) {
+    const view = document.getElementById("detailView");
+    view.classList.add("open");
+    view.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+    document.getElementById("detailBody").innerHTML =
+      '<div class="empty">Unable to load this show. Please try again.</div>';
+  }
 });
+
+
+
 
   
 
