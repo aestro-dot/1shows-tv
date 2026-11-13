@@ -941,6 +941,48 @@ renderContinue();
   outline: none !important;
 }
 
+/* 1SHOWS - COMPACT CONTROL PANEL */
+
+#showsPlayer.open .player-shell {
+  width: min(680px, calc(100vw - 40px)) !important;
+}
+
+#showsPlayer.open .player-glass {
+  z-index: 5 !important;
+  padding: 8px 12px !important;
+  bottom: 10px !important;
+  border-radius: 16px !important;
+}
+
+#showsPlayer.open .player-controls button {
+  padding: 6px 10px !important;
+  font-size: 13px !important;
+  min-height: 38px !important;
+}
+
+#showsPlayer.open .player-center {
+  z-index: 6 !important;
+}
+
+#showsPlayer.open .player-center button {
+  width: 40px !important;
+  height: 40px !important;
+  font-size: 13px !important;
+}
+
+#showsPlayer.open .player-center .main-play {
+  width: 52px !important;
+  height: 52px !important;
+}
+
+#showsPlayer.open .player-time {
+  font-size: 12px !important;
+}
+
+#showsPlayer.open #playerSeek {
+  margin: 5px 0 !important;
+}
+
 </style>
 
 <button id="playerTest" onclick="open1ShowsPlayer()">▶ Preview Player</button>
